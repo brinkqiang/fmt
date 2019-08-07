@@ -1,0 +1,39 @@
+cmake_minimum_required(VERSION 3.2)
+
+PROJECT(fmt)
+
+LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+INCLUDE(cmake/ModuleImport.cmake)
+INCLUDE(cmake/ModuleCompileOptions.cmake)
+ModuleSetCompileOptions()
+
+SET(FMT_VERSION_MAJOR "1")
+SET(FMT_VERSION_MINOR "0")
+SET(FMT_VERSION_PATCH "1")
+SET(FMT_VERSION "${FMT_VERSION_MAJOR}.${FMT_VERSION_MINOR}.${FMT_VERSION_PATCH}")
+
+MESSAGE(STATUS "VERSION: ${FMT_VERSION}")
+
+OPTION(USE_FMT "use fmt" OFF)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/include/fmt_config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/include/fmt_config.h)
+
+ModuleImport("dmlog" "thirdparty/dmlog")
+LibImport("fmt" "src")
+ExeImport("test" "fmt;dmlog")
+
+#ADD_CUSTOM_COMMAND(
+#TARGET fmttest
+#PRE_BUILD
+#COMMAND ${CMAKE_COMMAND} -E copy_if_different
+#${CMAKE_CURRENT_SOURCE_DIR}/config/test.csv
+#$<TARGET_FILE_DIR:fmttest>
+#)
+
+#INSTALL(DIRECTORY include/ DESTINATION include)
+#INSTALL(TARGETS fmt
+#        RUNTIME DESTINATION bin
+#        LIBRARY DESTINATION lib
+#        ARCHIVE DESTINATION lib)
+
+#SET(FMT_LIBS "fmt")
+#MARK_AS_ADVANCED(${FMT_LIBS})
