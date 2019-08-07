@@ -15,11 +15,9 @@ SET(FMT_VERSION "${FMT_VERSION_MAJOR}.${FMT_VERSION_MINOR}.${FMT_VERSION_PATCH}"
 MESSAGE(STATUS "VERSION: ${FMT_VERSION}")
 
 OPTION(USE_FMT "use fmt" OFF)
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/include/fmt_config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/include/fmt_config.h)
 
-ModuleImport("dmlog" "thirdparty/dmlog")
 LibImport("fmt" "src")
-ExeImport("test" "fmt;dmlog")
+ExeImport("test" "fmt")
 
 #ADD_CUSTOM_COMMAND(
 #TARGET fmttest
